@@ -106,6 +106,25 @@ nav a.active { background: #587cc2; color: white; }
 .contact-row { display: flex; align-items: center; gap: 24px; font-size: clamp(20px, 2.6vw, 36px); line-height: 1.25; min-width: 0; }
 .contact-row > span:last-child { overflow-wrap: anywhere; }
 .contact-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; background: white; color: #3975e8; border-radius: 50%; }
+/* ---------- contact page ---------- */
+.touch { background: #fff; }
+.touch-banner { position: relative; height: clamp(360px, 48vw, 655px); border-radius: 4px; overflow: hidden; display: grid; place-items: center; }
+.touch-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* The reference tints the photograph heavily so the white heading stays legible over it. */
+.touch-banner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(#4e72bce8, #4e72bcf0); }
+.touch-banner-copy { position: relative; z-index: 2; text-align: center; color: #fff; padding: 0 24px 9.5%; }
+.touch-banner-copy h1 { font-size: clamp(38px, 6vw, 82px); font-weight: 400; letter-spacing: .035em; line-height: 1.1; margin: 0; }
+.touch-banner-copy > a { font-family: 'Lato', 'Noto Sans Thai', sans-serif; display: inline-block; margin-top: clamp(10px, 1.6vw, 22px); font-size: clamp(15px, 2.2vw, 30px); font-weight: 300; }
+.touch-banner-copy > a:hover { text-decoration: underline; }
+.touch-lower { background: #f1f2f4; padding-bottom: clamp(70px, 14.2vw, 194px); }
+.touch-card { position: relative; z-index: 3; width: min(912px, calc(100% - 96px)); margin-top: clamp(-238px, -17.4vw, -120px); background: #fff; border-radius: clamp(16px, 2.2vw, 30px); box-shadow: 0 18px 44px #1b3f9e14; padding: clamp(26px, 3.4vw, 46px) clamp(16px, 2.4vw, 32px); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 2.4vw, 32px); }
+.touch-card article { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+.touch-icon { display: grid; place-items: center; width: clamp(62px, 7.3vw, 99px); height: clamp(62px, 7.3vw, 99px); border-radius: 50%; background: var(--ink); color: #fff; flex-shrink: 0; }
+.touch-icon svg { width: 52%; height: 52%; }
+.touch-card h2 { font-size: clamp(19px, 2.6vw, 36px); color: #1b3f9e; letter-spacing: -.5px; margin: clamp(14px, 1.8vw, 24px) 0 clamp(6px, .9vw, 12px); }
+.touch-card a { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: clamp(13px, 1.6vw, 22px); font-weight: 300; color: #5478c1; line-height: 1.5; overflow-wrap: anywhere; }
+.touch-card a:hover { text-decoration: underline; }
+
 .team { padding-block: 70px; }
 .team-heading { text-align: center; }
 .team-heading p { max-width: 700px; margin: 18px auto 40px; color: #718ab9; }
@@ -223,6 +242,12 @@ dialog img { width: 100%; height: auto; }
  .contact-row > div { display: flex; flex-wrap: wrap; gap: 0 7px; }
  .contact-icon { width: 26px; height: 26px; }
  .contact-icon svg { width: 18px; height: 18px; }
+ .touch-banner { height: 300px; }
+ .touch-banner-copy { padding-bottom: 8%; }
+ .touch-card { width: calc(100% - 40px); margin-top: -96px; grid-template-columns: 1fr; gap: 26px; padding: 30px 24px; }
+ .touch-card h2 { font-size: 21px; }
+ .touch-card a { font-size: 15px; }
+ .touch-lower { padding-bottom: 64px; }
  .team { padding-block: 45px; }
  .team-heading p { font-size: 14px; }
  .director { grid-template-columns: 1fr; padding: 24px; gap: 25px; }

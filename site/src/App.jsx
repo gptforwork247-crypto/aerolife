@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Play, Pause, X, List, Phone, EnvelopeSimple, Stethoscope, FirstAidKit, Heartbeat, Ambulance, LinkedinLogo } from '@phosphor-icons/react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Play, Pause, X, List, Phone, EnvelopeSimple, Stethoscope, FirstAidKit, Heartbeat, Ambulance, LinkedinLogo, FacebookLogo } from '@phosphor-icons/react';
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/600.css';
@@ -21,16 +21,17 @@ const icons = ['17','21','27'].map(n => asset(`ICON homepage/Screenshot 2026-09-
 const partners = ['airamb','ezy-airlines','vipjets','siam-seaplane','siam-ambulance'].map(n=>`partners/${n}.png`);
 const partnerNames = ['AIRAMB','EZY Airlines','VIPJets','Siam Seaplane','Siam Ambulance Center'];
 const copy = {
- en: {nav:['Home','Service','Experience','Team','Contact us'],hero:'Providing the highest standard\nof patient care & transportation\nis our top priority.',years:'Years of Experience',countries:'Countries',cases:'Patient Cases',services:['One Stop Service','Medical Equipment','Transportation Choice'],desc:['With more than 10 trusted partners, we provide seamless support throughout every patient journey.','High-quality medical equipment to support safe and effective patient care throughout the journey','Air ambulance, ground transportation, and ferry services are available to meet your medical transportation needs.'],partners:'Our Partnership',story:'AeroLife Story',storyText:'At AeroLife Thailand, we believe medical transportation is more than simply moving a patient from one destination to another. It is about providing trusted, compassionate care at every step. With a highly experienced medical team, fully equipped medical resources, and exceptional service — treating every patient like a member of our own family.',watch:'Watch our story',voices:'Patient Voices',voiceSub:'Real journeys. Heartfelt words.',care:'When Care Matters Most, We Go Further.',careText:'Combining medical expertise, aviation precision, and genuine compassion,\nwe deliver exceptional care throughout your journey.',team:'Medical Team',teamSub:'Dedicated people. Exceptional care. Meet the specialists who make every journey possible.',director:'Flight Medical Director',directorText:'Leading our medical team with experience, compassion, and a commitment to patient care — from the first conversation to a safe arrival.',roles:['Flight Doctor','Flight Nurse','Paramedic','EMT'],roleText:['Expert medical oversight and patient care in the air.','Attentive monitoring and compassionate care at every step.','Skilled support throughout medical transportation.','Coordinated support from departure to destination.'],contact:'Every journey starts with a conversation.',contactSub:'Speak with our team about your medical transportation needs.',talk:'Contact our team',view:'View letter',pause:'Pause slideshow',resume:'Resume slideshow'},
- th: {nav:['หน้าแรก','บริการ','ประสบการณ์','ทีมแพทย์','ติดต่อเรา'],hero:'เรามุ่งมั่นมอบมาตรฐานสูงสุดในการดูแลและเคลื่อนย้ายผู้ป่วย ด้วยความใส่ใจในทุกการเดินทาง',years:'ปีแห่งประสบการณ์',countries:'ประเทศ',cases:'เคสผู้ป่วย',services:['บริการครบวงจร','อุปกรณ์ทางการแพทย์','ทางเลือกในการเดินทาง'],desc:['ด้วยเครือข่ายพันธมิตรที่ไว้วางใจมากกว่า 10 แห่ง พร้อมดูแลตลอดการเดินทางของผู้ป่วย','อุปกรณ์ทางการแพทย์คุณภาพสูง เพื่อการดูแลผู้ป่วยอย่างมีประสิทธิภาพตลอดการเดินทาง','บริการเครื่องบินพยาบาล การเดินทางภาคพื้นดิน และเรือ ตามความต้องการในการเคลื่อนย้ายผู้ป่วย'],partners:'พันธมิตรของเรา',story:'เรื่องราวของ AeroLife',storyText:'ที่ AeroLife Thailand เราเชื่อว่าการเคลื่อนย้ายผู้ป่วยเป็นมากกว่าการเดินทางจากจุดหนึ่งไปยังอีกจุดหนึ่ง แต่คือการดูแลด้วยความเข้าใจและความไว้วางใจในทุกขั้นตอน ด้วยทีมแพทย์มากประสบการณ์ อุปกรณ์ทางการแพทย์ที่พร้อม และบริการที่ใส่ใจ เราดูแลผู้ป่วยทุกคนเสมือนคนในครอบครัว',watch:'ชมเรื่องราวของเรา',voices:'เสียงจากผู้ใช้บริการ',voiceSub:'ทุกการเดินทาง ทุกความรู้สึกจากใจ',care:'เมื่อการดูแลสำคัญที่สุด เราพร้อมไปให้ไกลกว่า',careText:'ผสานความเชี่ยวชาญทางการแพทย์ ความแม่นยำในการบิน และความใส่ใจ เพื่อดูแลคุณตลอดการเดินทาง',team:'ทีมแพทย์ของเรา',teamSub:'ทีมผู้เชี่ยวชาญที่ทุ่มเท เพื่อการดูแลในทุกการเดินทาง',director:'ผู้อำนวยการฝ่ายแพทย์การบิน',directorText:'นำทีมด้วยประสบการณ์ ความเข้าใจ และความมุ่งมั่นในการดูแลผู้ป่วย ตั้งแต่การติดต่อครั้งแรกจนถึงจุดหมายอย่างปลอดภัย',roles:['แพทย์เวชศาสตร์การบิน','พยาบาลการบิน','นักปฏิบัติการฉุกเฉินการแพทย์','เจ้าพนักงานฉุกเฉินการแพทย์'],roleText:['ดูแลและประเมินผู้ป่วยตลอดการเดินทางทางอากาศ','ติดตามอาการและดูแลอย่างใส่ใจในทุกขั้นตอน','สนับสนุนการดูแลระหว่างการเคลื่อนย้ายผู้ป่วย','ประสานการดูแลตั้งแต่ต้นทางจนถึงปลายทาง'],contact:'ทุกการเดินทางเริ่มต้นด้วยการพูดคุย',contactSub:'ปรึกษาทีมงานเกี่ยวกับการเคลื่อนย้ายผู้ป่วย',talk:'ติดต่อทีมงาน',view:'อ่านจดหมาย',pause:'หยุดสไลด์ชั่วคราว',resume:'เล่นสไลด์ต่อ'}
+ en: {nav:['Home','Service','Experience','Team','Contact us'],hero:'Providing the highest standard\nof patient care & transportation\nis our top priority.',years:'Years of Experience',countries:'Countries',cases:'Patient Cases',services:['One Stop Service','Medical Equipment','Transportation Choice'],desc:['With more than 10 trusted partners, we provide seamless support throughout every patient journey.','High-quality medical equipment to support safe and effective patient care throughout the journey','Air ambulance, ground transportation, and ferry services are available to meet your medical transportation needs.'],partners:'Our Partnership',story:'AeroLife Story',storyText:'At AeroLife Thailand, we believe medical transportation is more than simply moving a patient from one destination to another. It is about providing trusted, compassionate care at every step. With a highly experienced medical team, fully equipped medical resources, and exceptional service — treating every patient like a member of our own family.',watch:'Watch our story',voices:'Patient Voices',voiceSub:'Real journeys. Heartfelt words.',care:'When Care Matters Most, We Go Further.',careText:'Combining medical expertise, aviation precision, and genuine compassion,\nwe deliver exceptional care throughout your journey.',team:'Medical Team',teamSub:'Dedicated people. Exceptional care. Meet the specialists who make every journey possible.',director:'Flight Medical Director',directorText:'Leading our medical team with experience, compassion, and a commitment to patient care — from the first conversation to a safe arrival.',roles:['Flight Doctor','Flight Nurse','Paramedic','EMT'],roleText:['Expert medical oversight and patient care in the air.','Attentive monitoring and compassionate care at every step.','Skilled support throughout medical transportation.','Coordinated support from departure to destination.'],touch:'Get in Touch',site:'www.aerolifeth.com',channels:['Social Media','Email','Tel Number'],contact:'Every journey starts with a conversation.',contactSub:'Speak with our team about your medical transportation needs.',talk:'Contact our team',view:'View letter',pause:'Pause slideshow',resume:'Resume slideshow'},
+ th: {nav:['หน้าแรก','บริการ','ประสบการณ์','ทีมแพทย์','ติดต่อเรา'],hero:'เรามุ่งมั่นมอบมาตรฐานสูงสุดในการดูแลและเคลื่อนย้ายผู้ป่วย ด้วยความใส่ใจในทุกการเดินทาง',years:'ปีแห่งประสบการณ์',countries:'ประเทศ',cases:'เคสผู้ป่วย',services:['บริการครบวงจร','อุปกรณ์ทางการแพทย์','ทางเลือกในการเดินทาง'],desc:['ด้วยเครือข่ายพันธมิตรที่ไว้วางใจมากกว่า 10 แห่ง พร้อมดูแลตลอดการเดินทางของผู้ป่วย','อุปกรณ์ทางการแพทย์คุณภาพสูง เพื่อการดูแลผู้ป่วยอย่างมีประสิทธิภาพตลอดการเดินทาง','บริการเครื่องบินพยาบาล การเดินทางภาคพื้นดิน และเรือ ตามความต้องการในการเคลื่อนย้ายผู้ป่วย'],partners:'พันธมิตรของเรา',story:'เรื่องราวของ AeroLife',storyText:'ที่ AeroLife Thailand เราเชื่อว่าการเคลื่อนย้ายผู้ป่วยเป็นมากกว่าการเดินทางจากจุดหนึ่งไปยังอีกจุดหนึ่ง แต่คือการดูแลด้วยความเข้าใจและความไว้วางใจในทุกขั้นตอน ด้วยทีมแพทย์มากประสบการณ์ อุปกรณ์ทางการแพทย์ที่พร้อม และบริการที่ใส่ใจ เราดูแลผู้ป่วยทุกคนเสมือนคนในครอบครัว',watch:'ชมเรื่องราวของเรา',voices:'เสียงจากผู้ใช้บริการ',voiceSub:'ทุกการเดินทาง ทุกความรู้สึกจากใจ',care:'เมื่อการดูแลสำคัญที่สุด เราพร้อมไปให้ไกลกว่า',careText:'ผสานความเชี่ยวชาญทางการแพทย์ ความแม่นยำในการบิน และความใส่ใจ เพื่อดูแลคุณตลอดการเดินทาง',team:'ทีมแพทย์ของเรา',teamSub:'ทีมผู้เชี่ยวชาญที่ทุ่มเท เพื่อการดูแลในทุกการเดินทาง',director:'ผู้อำนวยการฝ่ายแพทย์การบิน',directorText:'นำทีมด้วยประสบการณ์ ความเข้าใจ และความมุ่งมั่นในการดูแลผู้ป่วย ตั้งแต่การติดต่อครั้งแรกจนถึงจุดหมายอย่างปลอดภัย',roles:['แพทย์เวชศาสตร์การบิน','พยาบาลการบิน','นักปฏิบัติการฉุกเฉินการแพทย์','เจ้าพนักงานฉุกเฉินการแพทย์'],roleText:['ดูแลและประเมินผู้ป่วยตลอดการเดินทางทางอากาศ','ติดตามอาการและดูแลอย่างใส่ใจในทุกขั้นตอน','สนับสนุนการดูแลระหว่างการเคลื่อนย้ายผู้ป่วย','ประสานการดูแลตั้งแต่ต้นทางจนถึงปลายทาง'],touch:'ติดต่อเรา',site:'www.aerolifeth.com',channels:['โซเชียลมีเดีย','อีเมล','เบอร์โทรศัพท์'],contact:'ทุกการเดินทางเริ่มต้นด้วยการพูดคุย',contactSub:'ปรึกษาทีมงานเกี่ยวกับการเคลื่อนย้ายผู้ป่วย',talk:'ติดต่อทีมงาน',view:'อ่านจดหมาย',pause:'หยุดสไลด์ชั่วคราว',resume:'เล่นสไลด์ต่อ'}
 };
 const sections=['home','services','experience','team','contact'];
 const roleIcons=[Stethoscope,Heartbeat,FirstAidKit,Ambulance];
 export function App(){
  const [lang,setLang]=useState('en');
  const [menu,setMenu]=useState(false);
- const isTeam=new URLSearchParams(window.location.search).get('page')==='team';
- const [active,setActive]=useState(isTeam?'team':'home');
+ const page=new URLSearchParams(window.location.search).get('page');
+ const isTeam=page==='team', isContact=page==='contact', isSub=isTeam||isContact;
+ const [active,setActive]=useState(isTeam?'team':isContact?'contact':'home');
  const [slide,setSlide]=useState(0);
  const [paused,setPaused]=useState(false);
  const [hovered,setHovered]=useState(false);
@@ -59,9 +60,9 @@ export function App(){
   return()=>{window.removeEventListener('load',refresh);mm.revert();observer.disconnect()};
  },[]);
  useEffect(()=>{
-  if(isTeam||paused||hovered||modal||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(isSub||paused||hovered||modal||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const id=setInterval(()=>changeSlide(1),5500);return()=>clearInterval(id);
- },[isTeam,paused,hovered,modal]);
+ },[isSub,paused,hovered,modal]);
  useLayoutEffect(()=>{
   const el=track.current;if(!el)return;
   const position=()=>el.clientWidth+parseFloat(getComputedStyle(el).gap);
@@ -80,7 +81,7 @@ export function App(){
   return()=>{document.body.style.overflow=old};
  },[modal]);
  const close=()=>{dialog.current?.close();setModal(null)};
- const navHref=id=>id==='team'?'/?page=team':isTeam?`/#${id}`:`#${id}`;
+ const navHref=id=>id==='team'?'/?page=team':id==='contact'?'/?page=contact':isSub?`/#${id}`:`#${id}`;
  return <div ref={root}>
   <a className="skip" href="#main">Skip to content</a>
   <header><div className="nav-wrap">
@@ -95,6 +96,23 @@ export function App(){
   <main id="main">{isTeam?<>
  <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact">{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
 
+  </>:isContact?<>
+   <section id="contact-page" className="touch">
+    <div className="touch-banner container">
+     <img src={asset('contact-hero.jpg')} alt="" aria-hidden="true"/>
+     <div className="touch-banner-copy">
+      <h1>{t.touch}</h1>
+      <a href="https://www.aerolifeth.com" target="_blank" rel="noreferrer">{t.site}</a>
+     </div>
+    </div>
+    <div className="touch-lower">
+     <div className="touch-card container">
+      <article><span className="touch-icon"><FacebookLogo size={40} weight="fill"/></span><h2>{t.channels[0]}</h2><a href="https://www.facebook.com/AeroLife.TH" target="_blank" rel="noreferrer">@AeroLife.TH</a></article>
+      <article><span className="touch-icon"><EnvelopeSimple size={40} weight="fill"/></span><h2>{t.channels[1]}</h2><a href="mailto:aerolifethailand@gmail.com">aerolifethailand@gmail.com</a></article>
+      <article><span className="touch-icon"><Phone size={40} weight="fill"/></span><h2>{t.channels[2]}</h2><a href="tel:+66880123567">+66880123567</a><a href="tel:+66653242823">+66653242823</a></article>
+     </div>
+    </div>
+   </section>
   </>:<>
    <section id="home" className="hero">
     <div className="hero-art" aria-hidden="true">{['top-left','top-right','bottom-left','bottom-right'].map(corner=><img key={corner} className={`hero-pattern ${corner}`} src={asset(`hero-${corner}.svg`)} alt=""/>)}</div>
