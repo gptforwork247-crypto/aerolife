@@ -93,7 +93,7 @@ export function App(){
    <button className="menu-toggle" aria-label={menu?'Close menu':'Open menu'} aria-expanded={menu} aria-controls="navigation" onClick={()=>setMenu(!menu)}>{menu?<X size={26}/>:<List size={26}/>}</button>
   </div></header>
   <main id="main">{isTeam?<>
- <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['20+','Physicians'],['23+','Nurses'],['34+','Paramedics']].map(([n,l])=><div key={n}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact">{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
+ <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact">{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
 
   </>:<>
    <section id="home" className="hero">
@@ -114,7 +114,7 @@ export function App(){
     <div className="slider-controls"><button className="round" aria-label="Previous letter" onClick={()=>changeSlide(-1)}><ArrowLeft size={21}/></button><span aria-live="polite">{String(slide+1).padStart(2,'0')} <span className="muted">/ 11</span></span><button className="round" aria-label="Next letter" onClick={()=>changeSlide(1)}><ArrowRight size={21}/></button></div>
     </div>
    </section>
-   <section className="care container reveal"><h2>{t.care}</h2><p>{t.careText}</p></section>
+   <section className="care container reveal"><h2>{lang==='th'?<>เมื่อการดูแลสำคัญที่สุด<span className="mobile-break"/><span className="mobile-care-line">เราพร้อมไปให้ไกลกว่า</span></>:t.care}</h2><p>{lang==='th'?<>ผสานความเชี่ยวชาญทางการแพทย์<span className="mobile-break"/> ความแม่นยำในการบิน และความใส่ใจ<span className="mobile-break"/> เพื่อดูแลคุณตลอดการเดินทาง</>:t.careText}</p></section>
   </>}</main>
   <footer id="contact" className="contact-strip"><div className="container">
    <div className="contact-row"><span className="contact-icon"><Phone size={27} weight="fill"/></span><div><a href="tel:+66880123567">+66880123567</a> <a href="tel:+66653242823">+66653242823</a></div></div>
