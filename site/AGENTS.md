@@ -27,8 +27,10 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 
 ## Partnership logos
 
-- The "Our Partnership" band uses the supplied partner logos in `fileforvibe/Logo partnership`, copied and
-  alpha-trimmed to `public/assets/partners/{airamb,ezy-airlines,vipjets,siam-seaplane,siam-ambulance}.png`.
+- The "Our Partnership" band uses the supplied partner logos, alpha-trimmed into
+  `public/assets/partners/{airamb,ezy-airlines,vipjets,siam-seaplane,siam-ambulance}.png`. They came from the
+  `fileforvibe/Logo partnership` drop folder, which the user has since deleted; recover it from commit
+  ee34a1b if an original is ever needed.
   This is a deliberate departure from the reference image, which shows placeholder marks (Uber, Airbnb and
   similar). Do not restore the reference crops.
 - The supplied logos are full colour on transparent backgrounds. Render them the way the reference renders its

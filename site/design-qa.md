@@ -18,7 +18,7 @@ final result: blocked
 3. Hero: retained the user's compact height preference. Removed the extra CTA absent from the source. Trimmed transparent margins on the supplied doctor's image and positioned the subject directly. Split SVG motifs into four proportionally scaled corner assets, avoiding both distortion and centered blank margins.
 4. Statistics: enlarged numerical hierarchy, restored inline labels and the rounded white overlap.
 5. Services: matched desktop card width, icon circles, interior icon size, vertical spacing, typography and copy. Mobile cards retain the source's centered composition.
-6. Partnership: reproduced the five reference marks using crops from the supplied reference, replacing the previously substituted partner logos. The original fileforvibe logos remain in assets.
+6. Partnership: reproduced the five reference marks using crops from the supplied reference, replacing the previously substituted partner logos. The originals were later swapped in — see the partnership note below.
 7. Story: restored the edge-aligned video and narrower right-hand copy. Local thumbnail from the specified video; click loads the YouTube embed. The thumbnail is a different frame from the reference, and full-resolution thumbnail is unavailable. Red source annotations are excluded.
 8. Patient voices: large center letter with cropped neighboring letters, animated next/previous, autoplay, pause, hover/focus pause, reduced-motion support and full-letter dialog. Removed the added subtitle and per-card captions.
 9. Care statement: corrected heading/body hierarchy and surrounding whitespace.
@@ -93,8 +93,7 @@ from the correct 1366 × 4027 reference rather than recovered:
 
 ## Partnership band now uses the supplied logos
 At the user's request the band no longer uses the reference crops. `public/assets/reference/partner-*.png`
-are replaced by `public/assets/partners/*.png` — the five logos from `fileforvibe/Logo partnership`, alpha
-trimmed. They are rendered translucent white (`filter: brightness(0) invert(1); opacity: .68`) to match the
+are replaced by `public/assets/partners/*.png` — the five supplied logos, alpha trimmed. They are rendered translucent white (`filter: brightness(0) invert(1); opacity: .68`) to match the
 way the reference treats its marks; in brand colour they have too little contrast on `--blue`. Verified at
 1366px (`justify-content: space-between`, 112px tall, capped at 200px wide) and at 390px (5-column grid,
 54 x 47px cells, grid spans x 20-370, `scrollWidth === 390`).

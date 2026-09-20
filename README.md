@@ -23,6 +23,6 @@ Features: Thai/English translation, flag language controls, mobile menu, proport
 
 Code: `site/src/App.jsx`, `site/src/styles.css`.
 
-Assets: doctor, service icons and letters from `fileforvibe`. Reference partner marks extracted from the supplied design. Original supplied logos remain available. Hero SVG artwork follows the user's authorization. Source annotations are not website copy. The existing team uses the supplied doctor and role cards because individual staff photos/names were not provided.
+Assets live in `site/public/assets`: the supplied doctor image, service icons, patient letters and partner logos, plus the hero corner motifs authored as SVG from the reference. The original `fileforvibe` drop folder was removed once its contents were in place; earlier commits still hold it. Hero SVG artwork follows the user's authorization. Source annotations are not website copy. The existing team uses the supplied doctor and role cards because individual staff photos/names were not provided.
 
 `site/design-qa.md` records changes, checks and remaining browser verification. Production build passes; visual/interaction verification awaits browser access.
