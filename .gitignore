@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# build output (regenerate with `cd site && npm run build`)
+dist/
+
+# macOS
+.DS_Store
+
+# logs
+*.log
+npm-debug.log*
