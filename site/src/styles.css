@@ -101,11 +101,12 @@ nav a.active { background: #587cc2; color: white; }
 .care p { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: 32px; max-width: 1050px; margin: 24px auto 0; color: #6084ca; line-height: 1.55; font-weight: 300;
   /* Same treatment as the hero: the English copy carries the break, narrower viewports reflow. */
   white-space: pre-line; }
-.contact-strip { background: var(--blue); color: #fdfcff; padding: 64px 0 40px; }
-.contact-strip > .container { width: min(1180px, calc(100% - 180px)); display: flex; flex-direction: column; gap: 12px; }
-.contact-row { display: flex; align-items: center; gap: 24px; font-size: clamp(20px, 2.6vw, 36px); line-height: 1.25; min-width: 0; }
+.contact-strip { background: var(--blue); color: #fdfcff; padding: clamp(28px, 2.9vw, 40px) 0 clamp(26px, 2.6vw, 36px); }
+.contact-strip > .container { width: min(1180px, calc(100% - 180px)); display: flex; flex-direction: column; gap: clamp(7px, .7vw, 10px); }
+.contact-row { display: flex; align-items: center; gap: clamp(12px, 1.2vw, 17px); font-size: clamp(15px, 1.75vw, 24px); line-height: 1.3; min-width: 0; }
 .contact-row > span:last-child { overflow-wrap: anywhere; }
-.contact-icon { display: grid; place-items: center; width: 42px; height: 42px; flex-shrink: 0; background: white; color: #3975e8; border-radius: 50%; }
+.contact-icon { display: grid; place-items: center; width: clamp(24px, 2.3vw, 32px); height: clamp(24px, 2.3vw, 32px); flex-shrink: 0; background: white; color: #3975e8; border-radius: 50%; }
+.contact-icon svg { width: 58%; height: 58%; }
 /* ---------- contact page ---------- */
 .touch { background: #fff; }
 .touch-banner { position: relative; height: clamp(360px, 48vw, 655px); border-radius: 4px; overflow: hidden; display: grid; place-items: center; }
