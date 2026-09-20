@@ -294,3 +294,7 @@ dialog img { width: 100%; height: auto; }
  .story-copy p { font-size: 16px; line-height: 1.6; }
  .story-video { min-height: 360px; }
 }
+
+/* Swapping pages in place gives no browser-level transition, so fade the new one in. */
+.page-fade { animation: pageFade .28s ease both; }
+@keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }

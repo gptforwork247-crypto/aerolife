@@ -29,8 +29,8 @@ const roleIcons=[Stethoscope,Heartbeat,FirstAidKit,Ambulance];
 export function App(){
  const [lang,setLang]=useState('en');
  const [menu,setMenu]=useState(false);
- const page=new URLSearchParams(window.location.search).get('page');
- const isTeam=page==='team', isContact=page==='contact', isSub=isTeam||isContact;
+ const [route,setRoute]=useState(()=>new URLSearchParams(window.location.search).get('page')||'home');
+ const isTeam=route==='team', isContact=route==='contact', isSub=isTeam||isContact;
  const [active,setActive]=useState(isTeam?'team':isContact?'contact':'home');
  const [slide,setSlide]=useState(0);
  const [paused,setPaused]=useState(false);
@@ -42,6 +42,36 @@ export function App(){
  const letterUrl=i=>asset(`Petient voice/${String(i+1).padStart(2,'0')}.jpg`);
  const changeSlide=delta=>{direction.current=delta;setSlide(n=>(n+delta+11)%11)};
  useEffect(()=>{document.documentElement.lang=lang},[lang]);
+ // Team and Contact are separate ?page= URLs. Following them as plain links reloads the whole
+ // document, so the header, fonts and images are rebuilt on every nav and it visibly flashes.
+ // Swap the page in place instead, and leave the href alone so new-tab and no-JS still work.
+ const go=e=>{
+  if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0)return;
+  const url=new URL(e.currentTarget.href,window.location.origin);
+  if(url.origin!==window.location.origin)return;
+  const next=url.searchParams.get('page')||'home';
+  setMenu(false);
+  if(next===route)return; // same page: let the browser smooth-scroll to the hash itself
+  e.preventDefault();
+  window.history.pushState({},'',url.pathname+url.search+url.hash);
+  setRoute(next);
+ };
+ useEffect(()=>{
+  const onPop=()=>setRoute(new URLSearchParams(window.location.search).get('page')||'home');
+  window.addEventListener('popstate',onPop);
+  return()=>window.removeEventListener('popstate',onPop);
+ },[]);
+ const firstRoute=useRef(true);
+ // Before paint, so the new page is never shown at the previous page's scroll offset.
+ // scroll-behavior is smooth on <html>, which would otherwise animate the whole way back up.
+ useLayoutEffect(()=>{
+  if(firstRoute.current){firstRoute.current=false;return}
+  const html=document.documentElement, prev=html.style.scrollBehavior;
+  html.style.scrollBehavior='auto';
+  const target=window.location.hash&&document.querySelector(window.location.hash);
+  if(target)target.scrollIntoView();else window.scrollTo(0,0);
+  html.style.scrollBehavior=prev;
+ },[route]);
  useEffect(()=>{
   const mm=gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)',()=>{
@@ -55,10 +85,14 @@ export function App(){
   const refresh=()=>ScrollTrigger.refresh();
   window.addEventListener('load',refresh);
   document.fonts?.ready.then(refresh);
+  ScrollTrigger.refresh();
+  // The sub-pages hold one section each, so scroll-spying them would just fight the route.
+  if(isSub){setActive(route);return()=>{window.removeEventListener('load',refresh);mm.revert()}}
+  setActive('home');
   const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)}),{rootMargin:'-15% 0px -60% 0px'});
   sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el)});
   return()=>{window.removeEventListener('load',refresh);mm.revert();observer.disconnect()};
- },[]);
+ },[route]);
  useEffect(()=>{
   if(isSub||paused||hovered||modal||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const id=setInterval(()=>changeSlide(1),5500);return()=>clearInterval(id);
@@ -85,16 +119,16 @@ export function App(){
  return <div ref={root}>
   <a className="skip" href="#main">Skip to content</a>
   <header><div className="nav-wrap">
-   <a className="wordmark" href={navHref('home')} aria-label="AeroLife home">AeroLife</a>
-   <nav id="navigation" className={menu?'open':''} aria-label="Main navigation">{sections.map((id,i)=><a key={id} href={navHref(id)} className={active===id?'active':''} aria-current={active===id?'location':undefined} onClick={()=>setMenu(false)}>{t.nav[i]}</a>)}</nav>
+   <a className="wordmark" href={navHref('home')} aria-label="AeroLife home" onClick={go}>AeroLife</a>
+   <nav id="navigation" className={menu?'open':''} aria-label="Main navigation">{sections.map((id,i)=><a key={id} href={navHref(id)} className={active===id?'active':''} aria-current={active===id?'location':undefined} onClick={go}>{t.nav[i]}</a>)}</nav>
    <div className="language" aria-label="Language">
     <button aria-label="ภาษาไทย" aria-pressed={lang==='th'} onClick={()=>setLang('th')}><span className="fi fi-th" aria-hidden="true"/></button>
     <button aria-label="English" aria-pressed={lang==='en'} onClick={()=>setLang('en')}><span className="fi fi-gb" aria-hidden="true"/></button>
    </div>
    <button className="menu-toggle" aria-label={menu?'Close menu':'Open menu'} aria-expanded={menu} aria-controls="navigation" onClick={()=>setMenu(!menu)}>{menu?<X size={26}/>:<List size={26}/>}</button>
   </div></header>
-  <main id="main">{isTeam?<>
- <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact">{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
+  <main id="main" key={route} className="page-fade">{isTeam?<>
+ <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact" onClick={go}>{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
 
   </>:isContact?<>
    <section id="contact-page" className="touch">
