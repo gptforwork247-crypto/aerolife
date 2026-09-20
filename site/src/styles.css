@@ -95,7 +95,9 @@ nav a.active { background: #587cc2; color: white; }
 .muted { opacity: .6; margin-left: 7px; }
 .care { text-align: center; padding-block: 140px 200px; }
 .care h2 { font-size: clamp(28px, 3.9vw, 54px); letter-spacing: -1.5px; white-space: nowrap; }
-.care p { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: 32px; max-width: 1050px; margin: 24px auto 0; color: #6084ca; line-height: 1.55; font-weight: 300; }
+.care p { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: 32px; max-width: 1050px; margin: 24px auto 0; color: #6084ca; line-height: 1.55; font-weight: 300;
+  /* Same treatment as the hero: the English copy carries the break, narrower viewports reflow. */
+  white-space: pre-line; }
 .contact-strip { background: var(--blue); color: #fdfcff; padding: 64px 0 40px; }
 .contact-strip > .container { width: min(1180px, calc(100% - 180px)); display: flex; flex-direction: column; gap: 12px; }
 .contact-row { display: flex; align-items: center; gap: 24px; font-size: clamp(20px, 2.6vw, 36px); line-height: 1.25; min-width: 0; }
@@ -151,7 +153,7 @@ dialog img { width: 100%; height: auto; }
  .letter-slide button { padding: 22px; }
  .care { padding-block: 105px 135px; }
  .care h2 { font-size: 3.7vw; }
- .care p { font-size: 25px; }
+ .care p { font-size: 25px; white-space: normal; }
 }
 @media (max-width: 700px) {
  html { scroll-padding-top: 85px; }
@@ -205,7 +207,7 @@ dialog img { width: 100%; height: auto; }
  .slider-controls { margin-top: 23px; }
  .care { padding-block: 66px 80px; }
  .care h2 { font-size: 29px; line-height: 1.3; white-space: normal; letter-spacing: -.7px; }
- .care p { font-size: 19px; margin-top: 20px; }
+ .care p { font-size: 19px; margin-top: 20px; white-space: normal; }
  .contact-strip { padding: 32px 0; }
  .contact-strip > .container { width: calc(100% - 40px); gap: 16px; }
  .contact-row { font-size: 14px; gap: 10px; align-items: flex-start; line-height: 1.6; }
