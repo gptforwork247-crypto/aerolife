@@ -188,8 +188,11 @@ dialog img { width: 100%; height: auto; }
  .language button { width: 38px; height: 38px; padding: 2px; }
  .language .fi { width: 28px; height: 28px; }
  .menu-toggle { display: grid; place-items: center; background: none; border: 0; padding: 6px; }
- nav { display: none; position: absolute; left: 0; right: 0; top: 76px; background: white; padding: 12px 20px 20px; border-bottom: 1px solid #e4eafa; box-shadow: 0 10px 20px #26487a0d; }
- nav.open { display: flex; flex-direction: column; align-items: stretch; }
+ nav { position: absolute; left: 0; right: 0; top: 76px; background: white; padding: 12px 20px 20px; border-bottom: 1px solid #e4eafa; box-shadow: 0 10px 20px #26487a0d;
+  flex-direction: column; align-items: stretch;
+  opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s; }
+ nav.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; transition: opacity .22s ease, transform .22s ease; }
  nav a { font-size: 16px; padding: 12px; }
  .container { width: calc(100% - 40px); }
  .hero-inner { width: calc(100% - 44px); height: 590px; align-items: flex-start; }
@@ -274,8 +277,14 @@ dialog img { width: 100%; height: auto; }
  header { height: 76px; }
  .language { margin-left: auto; }
  .menu-toggle { display: grid; place-items: center; background: none; border: 0; padding: 6px; }
- nav { display: none; position: absolute; left: 0; right: 0; top: 76px; padding: 15px 24px; background: #fff; box-shadow: 0 10px 20px #26487a12; }
- nav.open { display: flex; flex-direction: column; align-items: stretch; }
+ /* A display:none/flex swap has no transition to animate, so it pops instead of
+    opening smoothly. Fading opacity/transform with a visibility delay keeps the
+    panel out of layout and out of the tab order while closed, but lets it animate. */
+ nav { position: absolute; left: 0; right: 0; top: 76px; padding: 15px 24px; background: #fff; box-shadow: 0 10px 20px #26487a12;
+  flex-direction: column; align-items: stretch;
+  opacity: 0; visibility: hidden; transform: translateY(-8px); pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease, visibility 0s linear .22s; }
+ nav.open { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; transition: opacity .22s ease, transform .22s ease; }
  .stats strong { font-size: 36px; }
  .stats span { font-size: 15px; }
  .stats > div:first-child span { max-width: 100px; }
