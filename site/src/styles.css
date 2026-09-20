@@ -21,22 +21,22 @@ p { line-height: 1.7; }
 .container { width: min(1278px, calc(100% - 88px)); margin-inline: auto; }
 .skip { position: fixed; top: -80px; left: 20px; z-index: 100; background: white; padding: 15px; }
 .skip:focus { top: 10px; }
-header { height: clamp(92px, 10.2vw, 140px); background: #fff; position: relative; z-index: 20; }
-.nav-wrap { width: min(1288px, calc(100% - 78px)); height: 100%; display: flex; align-items: center; margin: auto; gap: 28px; }
-.wordmark { font-size: clamp(30px, 3.65vw, 50px); font-weight: 800; color: #386ee7; letter-spacing: -1.8px; }
+header { height: clamp(76px, 7.9vw, 108px); background: #fff; position: relative; z-index: 20; }
+.nav-wrap { width: min(1288px, calc(100% - 78px)); height: 100%; display: flex; align-items: center; margin: auto; gap: clamp(14px, 1.7vw, 24px); }
+.wordmark { font-size: clamp(26px, 2.9vw, 40px); font-weight: 800; color: #386ee7; letter-spacing: -1.8px; }
 nav { display: flex; gap: clamp(6px, 1.25vw, 17px); margin-left: auto; align-items: center; }
-nav a { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: clamp(16px, 1.9vw, 26px); font-weight: 400; white-space: nowrap; padding: 13px 19px; border-radius: 8px; transition: background .2s, color .2s; }
+nav a { font-family: 'Lato', 'Noto Sans Thai', sans-serif; font-size: clamp(15px, 1.5vw, 21px); font-weight: 400; white-space: nowrap; padding: 10px 16px; border-radius: 8px; transition: background .2s, color .2s; }
 nav a:hover { background: #edf3fb; }
 nav a.active { background: #587cc2; color: white; }
-.language { display: flex; align-items: center; gap: 15px; }
-.language button { border: 3px solid transparent; background: transparent; padding: 3px; display: grid; place-items: center; width: 62px; height: 62px; border-radius: 50%; transition: border-color .2s, background-color .2s; }
+.language { display: flex; align-items: center; gap: clamp(8px, .9vw, 12px); }
+.language button { border: 2px solid transparent; background: transparent; padding: 3px; display: grid; place-items: center; width: clamp(40px, 3.5vw, 48px); height: clamp(40px, 3.5vw, 48px); border-radius: 50%; transition: border-color .2s, background-color .2s; }
 .language button[aria-pressed="true"] { border-color: #386ee7; background: #edf3ff; }
 /* Only two flags are needed, so they are served from public/ rather than pulling in the
    flag-icons package, which bundles an SVG for every country. */
 .fi { position: relative; display: inline-block; background-position: 50%; background-repeat: no-repeat; }
 .fi-th { background-image: url('/assets/flags/th.svg'); }
 .fi-gb { background-image: url('/assets/flags/gb.svg'); }
-.language .fi { width: 50px; height: 50px; border-radius: 50%; background-size: cover; line-height: 1; }
+.language .fi { width: clamp(30px, 2.8vw, 38px); height: clamp(30px, 2.8vw, 38px); border-radius: 50%; background-size: cover; line-height: 1; }
 .menu-toggle { display: none; }
 .hero { position: relative; overflow: hidden; background: var(--blue); color: #fdfcff; }
 .hero-art { position: absolute; inset: 0; pointer-events: none; }
@@ -271,10 +271,10 @@ dialog img { width: 100%; height: auto; }
 
 /* Switch navigation before the desktop labels run out of space. */
 @media (min-width: 701px) and (max-width: 900px) {
- header { height: 96px; }
+ header { height: 76px; }
  .language { margin-left: auto; }
  .menu-toggle { display: grid; place-items: center; background: none; border: 0; padding: 6px; }
- nav { display: none; position: absolute; left: 0; right: 0; top: 96px; padding: 15px 24px; background: #fff; box-shadow: 0 10px 20px #26487a12; }
+ nav { display: none; position: absolute; left: 0; right: 0; top: 76px; padding: 15px 24px; background: #fff; box-shadow: 0 10px 20px #26487a12; }
  nav.open { display: flex; flex-direction: column; align-items: stretch; }
  .stats strong { font-size: 36px; }
  .stats span { font-size: 15px; }

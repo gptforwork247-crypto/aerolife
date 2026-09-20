@@ -40,7 +40,19 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 ## Header / hero height balance
 
 - Supersedes the earlier "desktop hero capped at 560px, tablet 480px" note. The user asked for a shorter
-  header so the hero gains height. At 1366px the header is now 140px (was 186px) and the hero 606px (was
-  560px) — the combined block is unchanged at ~746px, so nothing below the fold shifts.
-- Values: `header { height: clamp(92px, 10.2vw, 140px) }`, `.hero-inner { height: clamp(496px, 44.4vw, 606px) }`,
-  tablet (701–1150px) hero 526px. Mobile header (76px, sticky) and mobile hero (590px) are unchanged.
+  header so the hero gains height, then later asked for the header (and footer) to be smaller again.
+- Current values: `header { height: clamp(76px, 7.9vw, 108px) }` — 108px at 1366px, down from 186px
+  originally. `.hero-inner { height: clamp(496px, 44.4vw, 606px) }` — 606px at 1366px; the hero was not
+  grown to absorb the second reduction, the page simply got shorter. Tablet (701–1150px) hero 526px.
+- The header scales continuously with no jump at any breakpoint: 108px at 1366, 91px at 1150, 79px at 1000,
+  then a flat 76px from 900px down, which matches the mobile bar. The 701–900px hamburger range and the
+  mobile dropdown both offset from that same 76px.
+- Mobile header (76px, sticky) and mobile hero (590px) are unchanged throughout.
+
+## Header and footer weight
+
+- Both were deliberately reduced after the homepage was signed off, because they read heavier than the
+  content between them. Footer: 261px tall at 1366px with 36px text and 42px icons, now 188px with 24px text
+  and 32px icons. Header: 140px, now 108px, with the wordmark, nav and flag buttons scaled to match.
+- Mobile values for both were left alone — they already had their own compact media-query values (76px
+  header, 174px footer) and shrinking them further would hurt tap targets.
