@@ -48,7 +48,10 @@ nav a.active { background: #587cc2; color: white; }
 .hero-copy { position: relative; z-index: 2; width: 52%; padding-bottom: 45px; }
 .hero h1 { font-size: clamp(62px, 5.7vw, 78px); letter-spacing: -2.5px; line-height: 1.05; font-weight: 800; }
 .hero h1 span { display: block; font-size: .75em; font-weight: 400; letter-spacing: -1.5px; margin-top: 6px; }
-.hero p { font-size: clamp(21px, 2.05vw, 28px); max-width: 540px; font-weight: 500; line-height: 1.25; margin-top: 28px; }
+.hero p { font-size: clamp(21px, 2.05vw, 28px); max-width: 540px; font-weight: 500; line-height: 1.25; margin-top: 28px;
+  /* The requested break puts a longer line after a shorter one, which greedy wrapping never
+     produces, so the copy carries newlines. Narrower viewports reflow normally below. */
+  white-space: pre-line; }
 .hero-doctor { position: absolute; height: calc(100% - 48px); width: auto; max-width: none; right: -20px; bottom: 0; object-fit: contain; pointer-events: none; }
 .stats { width: min(1198px, calc(100% - 166px)); position: relative; margin-top: -90px; z-index: 3; background: white; min-height: 120px; border-radius: 20px 20px 0 0; display: grid; grid-template-columns: 1fr 1fr 1.2fr; align-items: center; padding: 20px 36px; }
 .stats > div, .team-stats > div { display: flex; align-items: center; justify-content: center; gap: 16px; }
@@ -127,7 +130,7 @@ dialog img { width: 100%; height: auto; }
  .language button, .language .fi { width: 34px; height: 34px; }
  .hero-inner { width: calc(100% - 100px); height: 526px; }
  .hero h1 { font-size: 64px; }
- .hero p { font-size: 23px; }
+ .hero p { font-size: 23px; white-space: normal; }
  .hero-doctor { height: 420px; right: -12px; }
  .stats { width: calc(100% - 100px); padding-inline: 18px; margin-top: -65px; min-height: 100px; }
  .stats strong { font-size: 44px; }
@@ -166,7 +169,7 @@ dialog img { width: 100%; height: auto; }
  .hero-copy { width: 100%; padding: 32px 0 0; }
  .hero h1 { font-size: 54px; letter-spacing: -1.5px; }
  .hero h1 span { font-size: 39px; letter-spacing: -1px; }
- .hero p { font-size: 17px; line-height: 1.4; max-width: 310px; margin-top: 20px; }
+ .hero p { font-size: 17px; line-height: 1.4; max-width: 310px; margin-top: 20px; white-space: normal; }
  .hero-doctor { height: 320px; right: 10px; bottom: 0; }
  .hero-pattern.top-left { width: 62%; }
  .hero-pattern.top-right { width: 64%; }
