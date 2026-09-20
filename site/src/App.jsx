@@ -9,7 +9,6 @@ import '@fontsource/montserrat/700.css';
 import '@fontsource/montserrat/800.css';
 import '@fontsource/lato/300.css';
 import '@fontsource/lato/400.css';
-import 'flag-icons/css/flag-icons.min.css';
 import '@fontsource/noto-sans-thai/400.css';
 import '@fontsource/noto-sans-thai/600.css';
 gsap.registerPlugin(ScrollTrigger);

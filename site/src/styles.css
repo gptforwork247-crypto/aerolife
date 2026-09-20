@@ -30,6 +30,11 @@ nav a:hover { background: #edf3fb; }
 nav a.active { background: #587cc2; color: white; }
 .language { display: flex; align-items: center; gap: 15px; }
 .language button { border: 0; background: transparent; padding: 0; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; }
+/* Only two flags are needed, so they are served from public/ rather than pulling in the
+   flag-icons package, which bundles an SVG for every country. */
+.fi { position: relative; display: inline-block; background-position: 50%; background-repeat: no-repeat; }
+.fi-th { background-image: url('/assets/flags/th.svg'); }
+.fi-gb { background-image: url('/assets/flags/gb.svg'); }
 .language .fi { width: 50px; height: 50px; border-radius: 50%; background-size: cover; line-height: 1; }
 .menu-toggle { display: none; }
 .hero { position: relative; overflow: hidden; background: var(--blue); color: #fdfcff; }
