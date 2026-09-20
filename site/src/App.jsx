@@ -12,6 +12,9 @@ import '@fontsource/lato/400.css';
 import '@fontsource/noto-sans-thai/400.css';
 import '@fontsource/noto-sans-thai/600.css';
 gsap.registerPlugin(ScrollTrigger);
+// iOS Safari resizes the viewport when the address bar collapses; without this ScrollTrigger
+// recalculates mid-scroll and can leave triggers pointing at stale positions.
+ScrollTrigger.config({ignoreMobileResize:true});
 const asset = p => `/assets/${p}`;
 const doctor = asset('Header image/doctor-trimmed.png');
 const icons = ['17','21','27'].map(n => asset(`ICON homepage/Screenshot 2026-09-20 at 3.10.${n} PM.png`));
@@ -43,11 +46,17 @@ export function App(){
   mm.add('(prefers-reduced-motion: no-preference)',()=>{
    const hero=root.current.querySelector('.hero-copy');
    if(hero){gsap.from(hero.children,{y:22,opacity:0,stagger:.13,duration:.85,ease:'power3.out'});gsap.from('.hero-doctor',{y:25,opacity:0,duration:1,ease:'power3.out'})}
-   gsap.utils.toArray('.reveal').forEach(el=>gsap.from(el,{y:24,opacity:0,duration:.65,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 94%',once:true}}));
+   // fromTo with immediateRender:false, never from(): a from() tween hides the element up front and
+   // leaves it hidden for good if its ScrollTrigger never fires. Content stays visible either way now.
+   gsap.utils.toArray('.reveal').forEach(el=>gsap.fromTo(el,{y:24,opacity:0},{y:0,opacity:1,duration:.65,ease:'power2.out',immediateRender:false,scrollTrigger:{trigger:el,start:'top 94%',once:true}}));
   });
+  // Trigger positions are measured before lazy images and webfonts settle; re-measure once they have.
+  const refresh=()=>ScrollTrigger.refresh();
+  window.addEventListener('load',refresh);
+  document.fonts?.ready.then(refresh);
   const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)}),{rootMargin:'-15% 0px -60% 0px'});
   sections.forEach(id=>{const el=document.getElementById(id);if(el)observer.observe(el)});
-  return()=>{mm.revert();observer.disconnect()};
+  return()=>{window.removeEventListener('load',refresh);mm.revert();observer.disconnect()};
  },[]);
  useEffect(()=>{
   if(isTeam||paused||hovered||modal||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
