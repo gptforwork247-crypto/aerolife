@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowUpRight, ArrowLeft, ArrowRight, Play, Pause, X, List, Phone, EnvelopeSimple, Stethoscope, FirstAidKit, Heartbeat, Ambulance, LinkedinLogo, FacebookLogo } from '@phosphor-icons/react';
+import { ArrowUpRight, ArrowLeft, ArrowRight, Play, Pause, X, List, Phone, EnvelopeSimple, LinkedinLogo, FacebookLogo } from '@phosphor-icons/react';
+import { director, groups } from './team.js';
 import '@fontsource/montserrat/400.css';
 import '@fontsource/montserrat/500.css';
 import '@fontsource/montserrat/600.css';
@@ -21,11 +22,12 @@ const icons = ['17','21','27'].map(n => asset(`ICON homepage/Screenshot 2026-09-
 const partners = ['airamb','ezy-airlines','vipjets','siam-seaplane','siam-ambulance'].map(n=>`partners/${n}.png`);
 const partnerNames = ['AIRAMB','EZY Airlines','VIPJets','Siam Seaplane','Siam Ambulance Center'];
 const copy = {
- en: {nav:['Home','Service','Experience','Team','Contact us'],hero:'Providing the highest standard\nof patient care & transportation\nis our top priority.',years:'Years of Experience',countries:'Countries',cases:'Patient Cases',services:['One Stop Service','Medical Equipment','Transportation Choice'],desc:['With more than 10 trusted partners, we provide seamless support throughout every patient journey.','High-quality medical equipment to support safe and effective patient care throughout the journey','Air ambulance, ground transportation, and ferry services are available to meet your medical transportation needs.'],partners:'Our Partnership',story:'AeroLife Story',storyText:'At AeroLife Thailand, we believe medical transportation is more than simply moving a patient from one destination to another. It is about providing trusted, compassionate care at every step. With a highly experienced medical team, fully equipped medical resources, and exceptional service — treating every patient like a member of our own family.',watch:'Watch our story',voices:'Patient Voices',voiceSub:'Real journeys. Heartfelt words.',care:'When Care Matters Most, We Go Further.',careText:'Combining medical expertise, aviation precision, and genuine compassion,\nwe deliver exceptional care throughout your journey.',team:'Medical Team',teamSub:'Dedicated people. Exceptional care. Meet the specialists who make every journey possible.',director:'Flight Medical Director',directorText:'Leading our medical team with experience, compassion, and a commitment to patient care — from the first conversation to a safe arrival.',roles:['Flight Doctor','Flight Nurse','Paramedic','EMT'],roleText:['Expert medical oversight and patient care in the air.','Attentive monitoring and compassionate care at every step.','Skilled support throughout medical transportation.','Coordinated support from departure to destination.'],touch:'Get in Touch',site:'www.aerolifeth.com',channels:['Social Media','Email','Tel Number'],contact:'Every journey starts with a conversation.',contactSub:'Speak with our team about your medical transportation needs.',talk:'Contact our team',view:'View letter',pause:'Pause slideshow',resume:'Resume slideshow'},
- th: {nav:['หน้าแรก','บริการ','ประสบการณ์','ทีมแพทย์','ติดต่อเรา'],hero:'เรามุ่งมั่นมอบมาตรฐานสูงสุดในการดูแลและเคลื่อนย้ายผู้ป่วย ด้วยความใส่ใจในทุกการเดินทาง',years:'ปีแห่งประสบการณ์',countries:'ประเทศ',cases:'เคสผู้ป่วย',services:['บริการครบวงจร','อุปกรณ์ทางการแพทย์','ทางเลือกในการเดินทาง'],desc:['ด้วยเครือข่ายพันธมิตรที่ไว้วางใจมากกว่า 10 แห่ง พร้อมดูแลตลอดการเดินทางของผู้ป่วย','อุปกรณ์ทางการแพทย์คุณภาพสูง เพื่อการดูแลผู้ป่วยอย่างมีประสิทธิภาพตลอดการเดินทาง','บริการเครื่องบินพยาบาล การเดินทางภาคพื้นดิน และเรือ ตามความต้องการในการเคลื่อนย้ายผู้ป่วย'],partners:'พันธมิตรของเรา',story:'เรื่องราวของ AeroLife',storyText:'ที่ AeroLife Thailand เราเชื่อว่าการเคลื่อนย้ายผู้ป่วยเป็นมากกว่าการเดินทางจากจุดหนึ่งไปยังอีกจุดหนึ่ง แต่คือการดูแลด้วยความเข้าใจและความไว้วางใจในทุกขั้นตอน ด้วยทีมแพทย์มากประสบการณ์ อุปกรณ์ทางการแพทย์ที่พร้อม และบริการที่ใส่ใจ เราดูแลผู้ป่วยทุกคนเสมือนคนในครอบครัว',watch:'ชมเรื่องราวของเรา',voices:'เสียงจากผู้ใช้บริการ',voiceSub:'ทุกการเดินทาง ทุกความรู้สึกจากใจ',care:'เมื่อการดูแลสำคัญที่สุด เราพร้อมไปให้ไกลกว่า',careText:'ผสานความเชี่ยวชาญทางการแพทย์ ความแม่นยำในการบิน และความใส่ใจ เพื่อดูแลคุณตลอดการเดินทาง',team:'ทีมแพทย์ของเรา',teamSub:'ทีมผู้เชี่ยวชาญที่ทุ่มเท เพื่อการดูแลในทุกการเดินทาง',director:'ผู้อำนวยการฝ่ายแพทย์การบิน',directorText:'นำทีมด้วยประสบการณ์ ความเข้าใจ และความมุ่งมั่นในการดูแลผู้ป่วย ตั้งแต่การติดต่อครั้งแรกจนถึงจุดหมายอย่างปลอดภัย',roles:['แพทย์เวชศาสตร์การบิน','พยาบาลการบิน','นักปฏิบัติการฉุกเฉินการแพทย์','เจ้าพนักงานฉุกเฉินการแพทย์'],roleText:['ดูแลและประเมินผู้ป่วยตลอดการเดินทางทางอากาศ','ติดตามอาการและดูแลอย่างใส่ใจในทุกขั้นตอน','สนับสนุนการดูแลระหว่างการเคลื่อนย้ายผู้ป่วย','ประสานการดูแลตั้งแต่ต้นทางจนถึงปลายทาง'],touch:'ติดต่อเรา',site:'www.aerolifeth.com',channels:['โซเชียลมีเดีย','อีเมล','เบอร์โทรศัพท์'],contact:'ทุกการเดินทางเริ่มต้นด้วยการพูดคุย',contactSub:'ปรึกษาทีมงานเกี่ยวกับการเคลื่อนย้ายผู้ป่วย',talk:'ติดต่อทีมงาน',view:'อ่านจดหมาย',pause:'หยุดสไลด์ชั่วคราว',resume:'เล่นสไลด์ต่อ'}
+ en: {nav:['Home','Service','Experience','Team','Contact us'],hero:'Providing the highest standard\nof patient care & transportation\nis our top priority.',years:'Years of Experience',countries:'Countries',cases:'Patient Cases',services:['One Stop Service','Medical Equipment','Transportation Choice'],desc:['With more than 10 trusted partners, we provide seamless support throughout every patient journey.','High-quality medical equipment to support safe and effective patient care throughout the journey','Air ambulance, ground transportation, and ferry services are available to meet your medical transportation needs.'],partners:'Our Partnership',story:'AeroLife Story',storyText:'At AeroLife Thailand, we believe medical transportation is more than simply moving a patient from one destination to another. It is about providing trusted, compassionate care at every step. With a highly experienced medical team, fully equipped medical resources, and exceptional service — treating every patient like a member of our own family.',watch:'Watch our story',voices:'Patient Voices',voiceSub:'Real journeys. Heartfelt words.',care:'When Care Matters Most, We Go Further.',careText:'Combining medical expertise, aviation precision, and genuine compassion,\nwe deliver exceptional care throughout your journey.',team:'Medical Team',teamSub:'Dedicated people. Exceptional care. Meet the specialists who make every journey possible.',director:'Flight Medical Director',directorText:'Leading our medical team with experience, compassion, and a commitment to patient care — from the first conversation to a safe arrival.',roles:['Flight Doctor','Flight Nurse','Paramedic','EMT'],roleText:['Expert medical oversight and patient care in the air.','Attentive monitoring and compassionate care at every step.','Skilled support throughout medical transportation.','Coordinated support from departure to destination.'],touch:'Get in Touch',site:'www.aerolifeth.com',channels:['Social Media','Email','Tel Number'],contact:'Every journey starts with a conversation.',contactSub:'Speak with our team about your medical transportation needs.',talk:'Contact our team',view:'View letter',pause:'Pause slideshow',resume:'Resume slideshow',readMore:'Read more',partTime:'Part-Time',langs:'Languages',groupTitles:['Flight Doctors','Flight Nurses','Flight Paramedics'],work:'Our Work',workSub:'Moments from our missions, on the ground and in the air.',prev:'Previous photo',next:'Next photo'},
+ th: {nav:['หน้าแรก','บริการ','ประสบการณ์','ทีมแพทย์','ติดต่อเรา'],hero:'เรามุ่งมั่นมอบมาตรฐานสูงสุดในการดูแลและเคลื่อนย้ายผู้ป่วย ด้วยความใส่ใจในทุกการเดินทาง',years:'ปีแห่งประสบการณ์',countries:'ประเทศ',cases:'เคสผู้ป่วย',services:['บริการครบวงจร','อุปกรณ์ทางการแพทย์','ทางเลือกในการเดินทาง'],desc:['ด้วยเครือข่ายพันธมิตรที่ไว้วางใจมากกว่า 10 แห่ง พร้อมดูแลตลอดการเดินทางของผู้ป่วย','อุปกรณ์ทางการแพทย์คุณภาพสูง เพื่อการดูแลผู้ป่วยอย่างมีประสิทธิภาพตลอดการเดินทาง','บริการเครื่องบินพยาบาล การเดินทางภาคพื้นดิน และเรือ ตามความต้องการในการเคลื่อนย้ายผู้ป่วย'],partners:'พันธมิตรของเรา',story:'เรื่องราวของ AeroLife',storyText:'ที่ AeroLife Thailand เราเชื่อว่าการเคลื่อนย้ายผู้ป่วยเป็นมากกว่าการเดินทางจากจุดหนึ่งไปยังอีกจุดหนึ่ง แต่คือการดูแลด้วยความเข้าใจและความไว้วางใจในทุกขั้นตอน ด้วยทีมแพทย์มากประสบการณ์ อุปกรณ์ทางการแพทย์ที่พร้อม และบริการที่ใส่ใจ เราดูแลผู้ป่วยทุกคนเสมือนคนในครอบครัว',watch:'ชมเรื่องราวของเรา',voices:'เสียงจากผู้ใช้บริการ',voiceSub:'ทุกการเดินทาง ทุกความรู้สึกจากใจ',care:'เมื่อการดูแลสำคัญที่สุด เราพร้อมไปให้ไกลกว่า',careText:'ผสานความเชี่ยวชาญทางการแพทย์ ความแม่นยำในการบิน และความใส่ใจ เพื่อดูแลคุณตลอดการเดินทาง',team:'ทีมแพทย์ของเรา',teamSub:'ทีมผู้เชี่ยวชาญที่ทุ่มเท เพื่อการดูแลในทุกการเดินทาง',director:'ผู้อำนวยการฝ่ายแพทย์การบิน',directorText:'นำทีมด้วยประสบการณ์ ความเข้าใจ และความมุ่งมั่นในการดูแลผู้ป่วย ตั้งแต่การติดต่อครั้งแรกจนถึงจุดหมายอย่างปลอดภัย',roles:['แพทย์เวชศาสตร์การบิน','พยาบาลการบิน','นักปฏิบัติการฉุกเฉินการแพทย์','เจ้าพนักงานฉุกเฉินการแพทย์'],roleText:['ดูแลและประเมินผู้ป่วยตลอดการเดินทางทางอากาศ','ติดตามอาการและดูแลอย่างใส่ใจในทุกขั้นตอน','สนับสนุนการดูแลระหว่างการเคลื่อนย้ายผู้ป่วย','ประสานการดูแลตั้งแต่ต้นทางจนถึงปลายทาง'],touch:'ติดต่อเรา',site:'www.aerolifeth.com',channels:['โซเชียลมีเดีย','อีเมล','เบอร์โทรศัพท์'],contact:'ทุกการเดินทางเริ่มต้นด้วยการพูดคุย',contactSub:'ปรึกษาทีมงานเกี่ยวกับการเคลื่อนย้ายผู้ป่วย',talk:'ติดต่อทีมงาน',view:'อ่านจดหมาย',pause:'หยุดสไลด์ชั่วคราว',resume:'เล่นสไลด์ต่อ',readMore:'อ่านเพิ่มเติม',partTime:'พาร์ทไทม์',langs:'ภาษา',groupTitles:['แพทย์การบิน','พยาบาลการบิน','นักปฏิบัติการฉุกเฉินการแพทย์'],work:'ภาพการทำงานของเรา',workSub:'ช่วงเวลาจากภารกิจของเรา ทั้งบนพื้นดินและบนอากาศ',prev:'ภาพก่อนหน้า',next:'ภาพถัดไป'}
 };
 const sections=['home','services','experience','team','contact'];
-const roleIcons=[Stethoscope,Heartbeat,FirstAidKit,Ambulance];
+const workPhotos=Array.from({length:19},(_,i)=>asset(`work/${String(i+1).padStart(2,'0')}.jpg`));
+const initials=name=>name.replace(/^(Sqn\.Ldr\.|Plt\.Off\.|Dr\.)\s*/,'').replace(/,.*$/,'').split(' ').map(w=>w[0]).slice(0,2).join('');
 export function App(){
  const [lang,setLang]=useState('en');
  const [menu,setMenu]=useState(false);
@@ -36,6 +38,10 @@ export function App(){
  const [paused,setPaused]=useState(false);
  const [hovered,setHovered]=useState(false);
  const [modal,setModal]=useState(null);
+ const [profile,setProfile]=useState(null);
+ const [work,setWork]=useState(0);
+ const [workHeld,setWorkHeld]=useState(false);
+ const profileDialog=useRef(null);
  const [videoPlaying,setVideoPlaying]=useState(false);
  const root=useRef(null),dialog=useRef(null),track=useRef(null),direction=useRef(0);
  const t=copy[lang];
@@ -109,12 +115,23 @@ export function App(){
   return()=>{observer.disconnect();gsap.killTweensOf(el)};
  },[slide]);
  useEffect(()=>{
+  if(isSub||workHeld||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const id=setInterval(()=>setWork(n=>(n+1)%workPhotos.length),4000);return()=>clearInterval(id);
+ },[isSub,workHeld]);
+ useEffect(()=>{
+  if(!profile)return;
+  profileDialog.current?.showModal();
+  const old=document.body.style.overflow;document.body.style.overflow='hidden';
+  return()=>{document.body.style.overflow=old};
+ },[profile]);
+ useEffect(()=>{
   if(!modal)return;
   dialog.current?.showModal();
   const old=document.body.style.overflow;document.body.style.overflow='hidden';
   return()=>{document.body.style.overflow=old};
  },[modal]);
  const close=()=>{dialog.current?.close();setModal(null)};
+ const closeProfile=()=>{profileDialog.current?.close();setProfile(null)};
  const navHref=id=>id==='team'?'/?page=team':id==='contact'?'/?page=contact':isSub?`/#${id}`:`#${id}`;
  return <div ref={root}>
   <a className="skip" href="#main">Skip to content</a>
@@ -128,7 +145,7 @@ export function App(){
    <button className="menu-toggle" aria-label={menu?'Close menu':'Open menu'} aria-expanded={menu} aria-controls="navigation" onClick={()=>setMenu(!menu)}>{menu?<X size={26}/>:<List size={26}/>}</button>
   </div></header>
   <main id="main" key={route} className="page-fade">{isTeam?<>
- <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div><div className="team-roles">{t.roles.map((r,i)=>{const Icon=roleIcons[i];return <article className="role-card reveal" key={r}><Icon size={42} weight="light"/><h3>{r}</h3><p>{t.roleText[i]}</p><a href="/#contact" onClick={go}>{t.talk}<ArrowUpRight size={18}/></a></article>})}</div></section>
+ <section id="team" className="team container"><div className="team-heading reveal"><h2>{t.team}</h2><p>{t.teamSub}</p></div><article className="director reveal"><div className="director-image"><img src={doctor} alt="Dr. Sura Jaidwatee" loading="lazy"/></div><div><h3>Dr. Sura Jaidwatee MD.</h3><span>{t.director}</span><p>{t.directorText}</p><button className="read-more" onClick={()=>setProfile({...director,photo:'director',role:t.director})}>{t.readMore}</button></div></article><div className="team-stats reveal">{[['6','Flight Doctor'],['8','Flight Nurse'],['7','Paramedic'],['6','EMT']].map(([n,l])=><div key={l}><strong>{n}</strong><span>{l}</span></div>)}</div>{groups.map((g,i)=><section className="team-group" key={g.id} aria-labelledby={`grp-${g.id}`}><h3 id={`grp-${g.id}`} className="reveal">{t.groupTitles[i]}</h3><div className="people-grid">{g.people.map(p=><article className="person-card reveal" key={p.name}><div className="person-photo">{p.photo?<img src={asset(`team/${p.photo}`)} alt={p.name} loading="lazy"/>:<span aria-hidden="true">{initials(p.name)}</span>}</div><h4>{p.name}</h4>{p.part&&<span className="person-tag">{t.partTime}</span>}<button onClick={()=>setProfile({...p,role:t.roles[i]})}>{t.readMore}</button></article>)}</div></section>)}</section>
 
   </>:isContact?<>
    <section id="contact-page" className="touch">
@@ -141,7 +158,7 @@ export function App(){
     </div>
     <div className="touch-lower">
      <div className="touch-card container">
-      <article><span className="touch-icon"><FacebookLogo size={40} weight="fill"/></span><h2>{t.channels[0]}</h2><a href="https://www.facebook.com/AeroLife.TH" target="_blank" rel="noreferrer">@AeroLife.TH</a></article>
+      <article><span className="touch-icon"><FacebookLogo size={40} weight="fill"/></span><h2>{t.channels[0]}</h2><a href="https://www.facebook.com/profile.php?id=61595478193041" target="_blank" rel="noreferrer">Aerolife Air Ambulance</a></article>
       <article><span className="touch-icon"><EnvelopeSimple size={40} weight="fill"/></span><h2>{t.channels[1]}</h2><a href="mailto:aerolifethailand@gmail.com">aerolifethailand@gmail.com</a></article>
       <article><span className="touch-icon"><Phone size={40} weight="fill"/></span><h2>{t.channels[2]}</h2><a href="tel:+66880123567">+66880123567</a><a href="tel:+66653242823">+66653242823</a></article>
      </div>
@@ -152,7 +169,7 @@ export function App(){
     <div className="hero-art" aria-hidden="true">{['top-left','top-right','bottom-left','bottom-right'].map(corner=><img key={corner} className={`hero-pattern ${corner}`} src={asset(`hero-${corner}.svg`)} alt=""/>)}</div>
     <div className="container hero-inner"><div className="hero-copy"><h1>AeroLife<span>Thailand</span></h1><p>{t.hero}</p></div><img className="hero-doctor" src={doctor} alt="Dr. Sura Jaidwatee, Flight Medical Director" fetchPriority="high"/></div>
    </section>
-   <div className="stats container">{[['18',t.years],['89+',t.countries],['2,000+',t.cases]].map(([n,label])=><div key={n}><strong>{n}</strong><span>{label}</span></div>)}</div>
+   <div className="stats container">{[['18',t.years],['89',t.countries],['2,000',t.cases]].map(([n,label])=><div key={n}><strong>{n}</strong><span>{label}</span></div>)}</div>
    <section id="services" className="services container">{t.services.map((title,i)=><article className="service-card reveal" key={i}><div className="service-icon"><img src={icons[i]} alt=""/></div><h2>{title}</h2><p>{t.desc[i]}</p></article>)}</section>
    <section className="partners"><div className="container"><h2>{t.partners}</h2><div className="partner-grid">{partners.map((p,i)=><img key={p} src={asset(p)} alt={partnerNames[i]} loading="lazy"/>)}</div></div></section>
    <section id="experience" className="story"><div className="story-video">
@@ -167,12 +184,23 @@ export function App(){
     </div>
    </section>
    <section className="care container reveal"><h2>{lang==='th'?<>เมื่อการดูแลสำคัญที่สุด<span className="mobile-break"/><span className="mobile-care-line">เราพร้อมไปให้ไกลกว่า</span></>:t.care}</h2><p>{lang==='th'?<><span className="desktop-care-copy">ผสานความเชี่ยวชาญทางการแพทย์ ความแม่นยำในการบิน และความใส่ใจ<br/>เพื่อดูแลคุณตลอดการเดินทาง</span><span className="mobile-care-copy">ผสานความเชี่ยวชาญทางการแพทย์<br/>ความแม่นยำในการบิน และความใส่ใจ<br/>เพื่อดูแลคุณตลอดการเดินทาง</span></>:t.careText}</p></section>
+   <section className="work" aria-roledescription="carousel" aria-label={t.work}>
+    <div className="container"><div className="section-heading"><h2>{t.work}</h2></div><p className="work-sub">{t.workSub}</p>
+     <div className="work-stage" onMouseEnter={()=>setWorkHeld(true)} onMouseLeave={()=>setWorkHeld(false)} onFocusCapture={()=>setWorkHeld(true)} onBlurCapture={e=>{if(!e.currentTarget.contains(e.relatedTarget))setWorkHeld(false)}}>
+      {workPhotos.map((src,i)=>Math.abs(i-work)<=1||Math.abs(i-work)===workPhotos.length-1?<img key={src} className={i===work?'on':''} src={src} alt={i===work?`${t.work} ${i+1}`:''} aria-hidden={i!==work} loading="lazy"/>:null)}
+      <button className="round work-prev" aria-label={t.prev} onClick={()=>setWork(n=>(n+workPhotos.length-1)%workPhotos.length)}><ArrowLeft size={21}/></button>
+      <button className="round work-next" aria-label={t.next} onClick={()=>setWork(n=>(n+1)%workPhotos.length)}><ArrowRight size={21}/></button>
+     </div>
+     <div className="work-count" aria-live="off">{String(work+1).padStart(2,'0')} <span className="muted">/ {workPhotos.length}</span></div>
+    </div>
+   </section>
   </>}</main>
   <footer id="contact" className="contact-strip"><div className="container">
    <div className="contact-row"><span className="contact-icon"><Phone size={27} weight="fill"/></span><div><a href="tel:+66880123567">+66880123567</a> <a href="tel:+66653242823">+66653242823</a></div></div>
    <a className="contact-row" href="mailto:aerolifethailand@gmail.com"><span className="contact-icon"><EnvelopeSimple size={27}/></span><span>Aerolifethailand@gmail.com</span></a>
    <div className="contact-row"><span className="contact-icon"><LinkedinLogo size={27}/></span><span>Linked in : Dr.Sura Jaidwatee MD.</span></div>
   </div></footer>
+  <dialog ref={profileDialog} className="profile" onCancel={()=>setProfile(null)} onClick={e=>{if(e.target===e.currentTarget)closeProfile()}} aria-label={profile?.name}><button className="modal-close" onClick={closeProfile} aria-label="Close"><X size={26}/></button>{profile&&<div className="profile-body"><div className="profile-head">{profile.photo&&<img src={profile.photo==='director'?doctor:asset(`team/${profile.photo}`)} alt={profile.name}/>}<div><h2>{profile.name}</h2><span className="profile-role">{profile.role}</span>{profile.part&&<span className="person-tag">{t.partTime}</span>}</div></div>{profile.languages&&<section><h3>{t.langs}</h3><p>{profile.languages}</p></section>}{profile.sections.map(sec=><section key={sec.title}><h3>{sec.title}</h3>{sec.items?<ul>{sec.items.map(x=><li key={x}>{x}</li>)}</ul>:<dl>{sec.rows.map(([y,x],i)=><div key={i}><dt>{y}</dt><dd>{x}</dd></div>)}</dl>}</section>)}</div>}</dialog>
   <dialog ref={dialog} onCancel={()=>setModal(null)} onClick={e=>{if(e.target===e.currentTarget)close()}} aria-label="Patient appreciation letter"><button className="modal-close" onClick={close} aria-label="Close letter"><X size={26}/></button>{modal&&<img src={letterUrl(modal-1)} alt={`Patient appreciation letter ${modal}`}/>}</dialog>
  </div>;
 }
