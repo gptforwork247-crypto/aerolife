@@ -1,7 +1,7 @@
 // Source: "ข้อมูลmedical team.docx". Sections with `items` are bullet lists; `rows` are [year, text] pairs.
 export const director = {
   name: 'Dr. Sura Jaidwatee MD.',
-  sections: [{ title: 'Education History', items: [
+  sections: [{ title: 'Education and Training Certificate', items: [
     'Bachelor of Medicine, Ramathibodi, Mahidol University',
     'Emergency Medicine, Royal Thai Air Force (RTAF)',
     'Aviation Medicine, Royal Thai Air Force (RTAF) (Recipient of the Excellent Flight Surgeon Student Award)',
